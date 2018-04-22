@@ -1,0 +1,42 @@
+version: '3'
+services:
+  cassandra-seed-server:
+    build: ./cassandra
+    container_name: cassandra-seed
+    environment:
+      - CASSANDRA_SEEDS=cassandra-seed-server
+      - CASSANDRA_CLUSTER_NAME=bdshr
+      - CASSANDRA_NUM_TOKENS=256
+
+  cassandra-follower-server:
+    build: ./cassandra
+    container_name: cassandra-follower
+    environment:
+      - CASSANDRA_SEEDS=cassandra-seed-server
+      - CASSANDRA_CLUSTER_NAME=bdshr
+      - CASSANDRA_NUM_TOKENS=256
+    depends_on:
+          - cassandra-seed-server
+
+  identity-server:
+    build:
+      context: ../identity-server/
+    container_name: identity-server
+    ports:
+      - "8084:8084"
+
+  healthid-server:
+    build:
+      context: ../HealthId-Service/
+    container_name: healthid-server
+    ports:
+      - "8086:8086"
+
+  shr-server:
+      build:
+        context: ../FreeSHR/
+      container_name: shr-server
+      ports:
+        - "8082:8082"
+      depends_on:
+        - cassandra-follower-server
