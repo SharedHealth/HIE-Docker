@@ -32,6 +32,13 @@ services:
     ports:
       - "8086:8086"
 
+  mci-server:
+    build:
+      context: ../MCI-Service/
+    container_name: mci-server
+    ports:
+      - "8081:8081"
+
   shr-server:
       build:
         context: ../FreeSHR/
