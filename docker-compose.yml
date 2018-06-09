@@ -18,6 +18,12 @@ services:
     depends_on:
           - cassandra-seed-server
 
+  hie-mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
   identity-server:
     build:
       context: ../identity-server/
@@ -47,3 +53,12 @@ services:
         - "8082:8082"
       depends_on:
         - cassandra-follower-server
+
+  tr-server:
+      build:
+        context: ../Terminology-Server
+      container_name: tr-server
+      ports:
+        - "9080:9080"
+      depends_on:
+        - hie-mysql
