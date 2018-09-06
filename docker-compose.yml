@@ -19,8 +19,9 @@ services:
           - cassandra-seed-server
 
   hie-mysql:
-    image: mysql
+    build: ./mysql
     restart: always
+    container_name: hie-mysql
     environment:
       MYSQL_ROOT_PASSWORD: example
 
