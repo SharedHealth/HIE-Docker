@@ -38,9 +38,11 @@ curl -X POST 'http://localhost:8086/healthIds/generateBlock?start=9800000100&tot
 
 #### Insert MCI Locations:-
 We need to have locations setup to create patients in MCI. A sample locations cql file is available `cassandra/mci_locations.cql`.
-* docker cp cassandra/mci_locations.cql cassandra-seed:/tmp
-* docker exec cassandra-seed /bin/bash -c "cqlsh -k mci -f /tmp/locations.cql"
 
+```
+docker cp cassandra/mci_locations.cql cassandra-seed:/tmp
+docker exec cassandra-seed /bin/bash -c "cqlsh -k mci -f /tmp/locations.cql"
+```
 Above will take some time if we are using an actual locations dump which has more than 50,000 entries.
 
 #### Create a patient:-
