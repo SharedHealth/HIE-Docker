@@ -1,1 +1,4 @@
 .idea
+cassandra/follower-datadir
+cassandra/seed-datadir
+mysql/mysql-datadir

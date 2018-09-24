@@ -7,6 +7,8 @@ services:
       - CASSANDRA_SEEDS=cassandra-seed-server
       - CASSANDRA_CLUSTER_NAME=bdshr
       - CASSANDRA_NUM_TOKENS=256
+    volumes:
+      - ./cassandra/seed-datadir:/var/lib/cassandra
 
   cassandra-follower-server:
     build: ./cassandra
@@ -15,6 +17,8 @@ services:
       - CASSANDRA_SEEDS=cassandra-seed-server
       - CASSANDRA_CLUSTER_NAME=bdshr
       - CASSANDRA_NUM_TOKENS=256
+    volumes:
+      - ./cassandra/follower-datadir:/var/lib/cassandra
     depends_on:
           - cassandra-seed-server
 
@@ -22,8 +26,8 @@ services:
     build: ./mysql
     restart: always
     container_name: hie-mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - ./mysql/mysql-datadir:/var/lib/mysql
 
   identity-server:
     build:
@@ -38,6 +42,8 @@ services:
     container_name: healthid-server
     ports:
       - "8086:8086"
+    depends_on:
+        - cassandra-follower-server
 
   mci-server:
     build:
@@ -45,6 +51,8 @@ services:
     container_name: mci-server
     ports:
       - "8081:8081"
+    depends_on:
+        - cassandra-follower-server
 
   shr-server:
       build:
