@@ -23,9 +23,11 @@ services:
           - cassandra-seed-server
 
   hie-mysql:
-    build: ./mysql
+    image: mysql:5.6
     restart: always
     container_name: hie-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
     volumes:
       - ./mysql/dumps/:/docker-entrypoint-initdb.d/
       - ./mysql/mysql-datadir:/var/lib/mysql
