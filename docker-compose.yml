@@ -27,6 +27,7 @@ services:
     restart: always
     container_name: hie-mysql
     volumes:
+      - ./mysql/dumps/:/docker-entrypoint-initdb.d/
       - ./mysql/mysql-datadir:/var/lib/mysql
 
   identity-server:
