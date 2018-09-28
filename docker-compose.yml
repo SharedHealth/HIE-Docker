@@ -74,3 +74,12 @@ services:
         - "9080:9080"
       depends_on:
         - hie-mysql
+
+  datasense:
+      build:
+        context: ../SHR-Datasense
+      container_name: datasense
+      ports:
+        - "8083:8083"
+      depends_on:
+        - hie-mysql

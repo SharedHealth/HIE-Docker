@@ -26,3 +26,8 @@ cd ../Terminology-Server/
 ./gradlew clean dist -x test
 cd ../HIE-Docker
 
+echo "Build SHR-Datasense Server"
+cd ../SHR-Datasense/
+./gradlew clean dist -x test
+cd ../HIE-Docker
+
